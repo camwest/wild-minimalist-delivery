@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
-import Button from './Button';
+import { storiesOf } from '@kadira/storybook';
+import TextInput from '../components/TextInput';
 
-storiesOf('Button', module)
-  .add('with text', () => (
-    <Button onClick={action('clicked')}>Hello Button</Button>
-  ))
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>
+storiesOf('TextInput', module)
+  .add('default', () => (
+    <div>
+      <TextInput placeholder="Email" type="email" />
+      <TextInput placeholder="Zipcode" />
+    </div>
   ));
