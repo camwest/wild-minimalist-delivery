@@ -23,7 +23,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "predeploy": "npm run build && npm run build-storybook",
-    "deploy": "gh-pages -m 'auto commit [ci skip]' -d dist",
+    "deploy": "gh-pages -m 'auto commit [ci skip]' -d build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o build/storybook"
   }
