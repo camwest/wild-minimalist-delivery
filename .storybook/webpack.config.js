@@ -24,5 +24,11 @@ module.exports = function(storybookBaseConfig, configType) {
     })
   });
 
+  /**
+   * Since storybook onlys upports Webpack 1.x we need to transpile
+   * our modules with babel. This is a dirty hack
+   */
+  newConfig.module.loaders[0].test = /\.(j|t)sx?$/;
+
   return newConfig;
 };
