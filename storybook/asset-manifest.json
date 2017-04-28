@@ -1,6 +1,8 @@
 {
-  "manager.js": "static/manager.bee63403cf1e09d065df.bundle.js",
-  "manager.js.map": "static/manager.bee63403cf1e09d065df.bundle.js.map",
-  "preview.js": "static/preview.2df50f4771216ab80f8f.bundle.js",
-  "preview.js.map": "static/preview.2df50f4771216ab80f8f.bundle.js.map"
+  "manager.js": "static/manager.22c6d4be2437f6081c9c.bundle.js",
+  "manager.js.map": "static/manager.22c6d4be2437f6081c9c.bundle.js.map",
+  "preview.css": "static/css/preview.d3b4d1c4.css",
+  "preview.css.map": "static/css/preview.d3b4d1c4.css.map",
+  "preview.js": "static/preview.ea7130cf51f4d94c3cf5.bundle.js",
+  "preview.js.map": "static/preview.ea7130cf51f4d94c3cf5.bundle.js.map"
 }
