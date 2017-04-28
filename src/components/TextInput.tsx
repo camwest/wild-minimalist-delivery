@@ -32,6 +32,9 @@ const Input = styled.input`
   line-height: ${atoms.lineHeight.copy};
   padding: 0 ${atoms.spacing.small};
   flex-grow: 1;
+  margin: 0;
+  /* fix issue in safari where input has min-width */
+  width: 100%;
   &:focus {
     outline: none;
   }
