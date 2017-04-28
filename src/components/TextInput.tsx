@@ -1,15 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-
-const atoms = {
-  colors: {
-    one: '#3F51B5'
-  },
-
-  fonts: {
-    default: 'courier'
-  }
-};
+import atoms from './atoms';
 
 interface FocusProps extends React.HTMLAttributes<HTMLDivElement> {
   focus: boolean;
@@ -21,25 +12,26 @@ const Focusable: React.SFC<FocusProps> = (props: any) => (
 );
 
 const Wrapper = styled(Focusable) `
-  background: ${props => props.focus ? 'lightgrey' : 'transparent'};;
   box-sizing: border-box;
-  color: ${atoms.colors.one};
+  color: ${atoms.colors.grey1};
   font-family: ${atoms.fonts.default};
-  font-size: 14px;
-  line-height: 36px;
-  padding-left: 12.5px;
-  padding-top: 8px;
-  padding-bottom: 10px;
+  font-size: ${atoms.typeScale.size5};
+  line-height: ${atoms.lineHeight.copy};
+  padding: ${atoms.spacing.small} ${atoms.spacing.medium};
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
 `;
 
 const Input = styled.input`
   background: transparent;
-  margin-left: 12.5px;
-  font-size: 14px;
-  line-height: 36px;
   border-width: 0;
-  padding: 0;
-
+  display: block;
+  color: ${atoms.colors.purple1};
+  font-size: ${atoms.typeScale.size5};
+  line-height: ${atoms.lineHeight.copy};
+  padding: 0 ${atoms.spacing.small};
+  flex-grow: 1;
   &:focus {
     outline: none;
   }
@@ -49,6 +41,11 @@ interface Props {
   children?: any;
   placeholder?: string;
   type?: string;
+
+  /**
+   * Shows 👌 to the right of the input
+   */
+  valid?: boolean;
 }
 
 interface State {
@@ -57,7 +54,8 @@ interface State {
 
 class TextInput extends React.Component<Props, State> {
   static defaultProps = {
-    type: 'text'
+    type: 'text',
+    valid: false
   };
 
   private input: HTMLInputElement;
@@ -84,12 +82,13 @@ class TextInput extends React.Component<Props, State> {
   }
 
   render() {
-    const { placeholder, type } = this.props;
+    const { placeholder, type, valid } = this.props;
 
     return (
       <Wrapper focus={this.state.focus} onClick={this.handleClick}>
-        {placeholder}
+        <span style={{ width: 60 }}>{placeholder}</span>
         <Input innerRef={r => this.input = r} type={type} onFocus={this.handleFocus} onBlur={this.handleBlur} />
+        {valid && '👌'}
       </Wrapper>
     );
   }
