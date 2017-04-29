@@ -13,9 +13,11 @@
     "styled-components": "^1.4.5"
   },
   "devDependencies": {
-    "react-scripts-ts": "1.3.0",
+    "@kadira/storybook": "^2.21.0",
     "gh-pages": "^0.12.0",
-    "@kadira/storybook": "^2.21.0"
+    "react-scripts-ts": "1.3.0",
+    "tslint": "^5.1.0",
+    "typescript": "^2.3.2"
   },
   "scripts": {
     "start": "react-scripts-ts start",
