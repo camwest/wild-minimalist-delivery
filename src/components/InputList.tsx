@@ -7,10 +7,10 @@ interface Props {
 }
 
 const Container = styled.div`
-  border: solid 1px ${atoms.colors.grey1};
+  border: solid 1px ${atoms.colors.grey2};
 
   > * {
-    border-bottom: solid 1px ${atoms.colors.grey1};
+    border-bottom: solid 1px ${atoms.colors.grey2};
   }
 
   > *:last-child {

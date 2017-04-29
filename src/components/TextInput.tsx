@@ -2,39 +2,67 @@ import * as React from 'react';
 import styled from 'styled-components';
 import atoms from './atoms';
 
-interface FocusProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   focus: boolean;
   children?: any;
 }
 
-const Focusable: React.SFC<FocusProps> = (props: any) => (
-  <div {...props}>{props.children}</div>
-);
+const Focusable: React.SFC<ContainerProps> = (props: any) => {
+  const { focus, children, ...rest } = props;
+
+  return (
+    <div {...rest}>{children}</div>
+  );
+};
 
 const Wrapper = styled(Focusable) `
   box-sizing: border-box;
-  color: ${atoms.colors.grey1};
-  font-family: ${atoms.fonts.default};
-  font-size: ${atoms.typeScale.size5};
-  line-height: ${atoms.lineHeight.copy};
+  background: ${props => props.focus ? atoms.colors.white : 'transparent'}
   padding: ${atoms.spacing.small} ${atoms.spacing.medium};
-  cursor: pointer;
+  cursor: text;
   display: flex;
   flex-direction: row;
 `;
 
-const Input = styled.input`
+interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
+  valid: boolean;
+  children?: any;
+}
+
+class ValidInput extends React.Component<InputProps, {}> {
+  private input: HTMLInputElement;
+
+  focus(): void {
+    this.input.focus();
+  }
+
+  render() {
+    const { valid, children, ...rest } = this.props;
+
+    return (
+      <input ref={r => this.input = r} {...rest}>{children}</input>
+    );
+  }
+}
+
+const Input = styled(ValidInput) `
   background: transparent;
   border-width: 0;
   display: block;
-  color: ${atoms.colors.purple1};
+  color: ${atoms.colors.grey3};
   font-size: ${atoms.typeScale.size5};
   line-height: ${atoms.lineHeight.copy};
-  padding: 0 ${atoms.spacing.small};
+  padding: 0;
+  padding-right: ${props => props.valid ? atoms.spacing.small : 0};
   flex-grow: 1;
   margin: 0;
   /* fix issue in safari where input has min-width */
   width: 100%;
+
+  &::placeholder {
+    color: ${atoms.colors.purple1};
+  }
+
   &:focus {
     outline: none;
   }
@@ -49,6 +77,11 @@ interface Props {
    * Shows 👌 to the right of the input
    */
   valid?: boolean;
+
+  /**
+   * Changes the background color of the input
+   */
+  focus?: boolean;
 }
 
 interface State {
@@ -61,11 +94,19 @@ class TextInput extends React.Component<Props, State> {
     valid: false
   };
 
-  private input: HTMLInputElement;
+  private input: any;
 
   constructor(props: Props) {
     super(props);
     this.state = { focus: false };
+  }
+
+  getFocus(): boolean {
+    if (this.props.hasOwnProperty('focus')) {
+      return this.props.focus || false;
+    } else {
+      return this.state.focus;
+    }
   }
 
   handleFocus = () => {
@@ -87,11 +128,19 @@ class TextInput extends React.Component<Props, State> {
   render() {
     const { placeholder, type, valid } = this.props;
 
+    let defaultValue = (valid) ? valid : TextInput.defaultProps.valid;
+
     return (
-      <Wrapper focus={this.state.focus} onClick={this.handleClick}>
-        <span style={{ width: 60 }}>{placeholder}</span>
-        <Input innerRef={r => this.input = r} type={type} onFocus={this.handleFocus} onBlur={this.handleBlur} />
-        {valid && '👌'}
+      <Wrapper focus={this.getFocus()} onClick={this.handleClick}>
+        <Input
+          innerRef={r => this.input = r}
+          placeholder={placeholder}
+          type={type}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          valid={defaultValue}
+        />
+        {defaultValue && '👌'}
       </Wrapper>
     );
   }

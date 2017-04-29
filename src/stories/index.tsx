@@ -15,6 +15,11 @@ storiesOf('TextInput', module)
       <TextInput placeholder="Email" valid={true} />
     </MasterLayout>
   ))
+  .add('focused TextInput', () => (
+    <MasterLayout style={{ width: 250, height: 250 }}>
+      <TextInput placeholder="Email" valid={true} focus={true} />
+    </MasterLayout>
+  ))
   .add('InputList', () => (
     <MasterLayout style={{ width: 250, height: 250 }}>
       <InputList>

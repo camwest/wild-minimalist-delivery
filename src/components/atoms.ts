@@ -1,8 +1,10 @@
 const atoms = {
   colors: {
     purple1: '#3F51B5',
-    grey1: '#3F4B57',
-    white1: '#F5F5F5'
+    grey1: '#F5F5F5',
+    grey2: '#AFB8C0',
+    grey3: '#3F4B57',
+    white: '#FFFFFF',
   },
 
   fonts: {
