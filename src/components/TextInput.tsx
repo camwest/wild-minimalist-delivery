@@ -16,12 +16,13 @@ const Focusable: React.SFC<ContainerProps> = (props: any) => {
 };
 
 const Wrapper = styled(Focusable) `
-  box-sizing: border-box;
   background: ${props => props.focus ? atoms.colors.white : 'transparent'}
-  padding: ${atoms.spacing.small} ${atoms.spacing.medium};
+  box-sizing: border-box;
   cursor: text;
   display: flex;
   flex-direction: row;
+  line-height: ${atoms.lineHeight.copy};
+  padding: ${atoms.spacing.small} ${atoms.spacing.medium};
 `;
 
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
@@ -48,16 +49,15 @@ class ValidInput extends React.Component<InputProps, {}> {
 const Input = styled(ValidInput) `
   background: transparent;
   border-width: 0;
-  display: block;
   color: ${atoms.colors.grey3};
+  display: block;
+  flex-grow: 1;
   font-size: ${atoms.typeScale.size5};
   line-height: ${atoms.lineHeight.copy};
-  padding: 0;
-  padding-right: ${props => props.valid ? atoms.spacing.small : 0};
-  flex-grow: 1;
   margin: 0;
-  /* fix issue in safari where input has min-width */
-  width: 100%;
+  padding-right: ${props => props.valid ? atoms.spacing.small : 0};
+  padding: 0;
+  width: 100%; /* fix issue in safari where input has min-width */
 
   &::placeholder {
     color: ${atoms.colors.purple1};
