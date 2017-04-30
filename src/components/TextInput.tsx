@@ -67,6 +67,10 @@ const Input = styled(ValidInput) `
   &:focus {
     outline: none;
   }
+
+  &:invalid {
+    box-shadow: unset;
+  }
 `;
 
 interface Props {
