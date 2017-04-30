@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+
 import atoms from './atoms';
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,6 +29,7 @@ const Wrapper = styled(Focusable) `
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
   valid: boolean;
   children?: any;
+  innerRef?: any;
 }
 
 class ValidInput extends React.Component<InputProps, {}> {
@@ -37,8 +39,12 @@ class ValidInput extends React.Component<InputProps, {}> {
     this.input.focus();
   }
 
+  get valid(): boolean {
+    return this.input.validity.valid;
+  }
+
   render() {
-    const { valid, children, ...rest } = this.props;
+    const { valid, children, innerRef, ...rest } = this.props;
 
     return (
       <input ref={r => this.input = r} {...rest}>{children}</input>
@@ -79,7 +85,12 @@ interface Props {
   type?: string;
 
   /**
-   * Shows 👌 to the right of the input
+   * The value of the HTMLInputElement
+   */
+  value?: string;
+
+  /**
+   * Shows 👌 to the right of the input. Overrides internal valid state
    */
   valid?: boolean;
 
@@ -87,23 +98,28 @@ interface Props {
    * Changes the background color of the input
    */
   focus?: boolean;
+
+  /**
+   * Sets the input to be required
+   */
+  required?: boolean;
 }
 
 interface State {
   focus: boolean;
+  valid: boolean;
 }
 
 class TextInput extends React.Component<Props, State> {
   static defaultProps = {
-    type: 'text',
-    valid: false
+    type: 'text'
   };
 
-  private input: any;
+  private input: ValidInput;
 
   constructor(props: Props) {
     super(props);
-    this.state = { focus: false };
+    this.state = { focus: false, valid: true };
   }
 
   getFocus(): boolean {
@@ -111,6 +127,14 @@ class TextInput extends React.Component<Props, State> {
       return this.props.focus || false;
     } else {
       return this.state.focus;
+    }
+  }
+
+  getValid(): boolean {
+    if (this.props.hasOwnProperty('valid')) {
+      return this.props.valid || true;
+    } else {
+      return this.state.valid;
     }
   }
 
@@ -126,26 +150,44 @@ class TextInput extends React.Component<Props, State> {
     });
   }
 
+  handleChange = () => {
+    this.setState((prevState: State) => {
+      return {
+        valid: this.input.valid
+      };
+    });
+  }
+
   handleClick = () => {
     this.input.focus();
   }
 
-  render() {
-    const { placeholder, type, valid } = this.props;
+  componentDidMount() {
+    this.setState({ valid: this.input.valid });
+  }
 
-    let defaultValue = (valid) ? valid : TextInput.defaultProps.valid;
+  render() {
+    const {
+      placeholder,
+      required,
+      type,
+      value
+    } = this.props;
 
     return (
       <Wrapper focus={this.getFocus()} onClick={this.handleClick}>
         <Input
-          innerRef={r => this.input = r}
+          innerRef={(r: any) => this.input = r}
           placeholder={placeholder}
           type={type}
+          value={value}
+          required={required}
+          onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          valid={defaultValue}
+          valid={this.getValid()}
         />
-        {defaultValue && '👌'}
+        {this.getValid() && '👌'}
       </Wrapper>
     );
   }

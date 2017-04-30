@@ -5,26 +5,26 @@ import InputList from '../components/InputList';
 import MasterLayout from '../components/MasterLayout';
 
 storiesOf('TextInput', module)
-  .add('Basic TextInput', () => (
+  .add('valid email address', () => (
     <MasterLayout style={{ width: 250, height: 250 }}>
-      <TextInput placeholder="Email" type="email" />
+      <TextInput placeholder="Email" type="email" value="camwest@gmail.com" required={true} />
     </MasterLayout>
   ))
-  .add('valid TextInput', () => (
+  .add('invalid email address', () => (
     <MasterLayout style={{ width: 250, height: 250 }}>
-      <TextInput placeholder="Email" valid={true} />
+      <TextInput placeholder="Email" type="email" value="camwest" />
     </MasterLayout>
   ))
   .add('focused TextInput', () => (
     <MasterLayout style={{ width: 250, height: 250 }}>
-      <TextInput placeholder="Email" valid={true} focus={true} />
+      <TextInput placeholder="Email" type="email" required={true} focus={true} />
     </MasterLayout>
   ))
   .add('InputList', () => (
     <MasterLayout style={{ width: 250, height: 250 }}>
       <InputList>
-        <TextInput placeholder="Email" type="email" />
-        <TextInput placeholder="Zipcode" valid={true} />
+        <TextInput placeholder="Email" type="email" required={true} />
+        <TextInput placeholder="Zipcode" required={true} />
       </InputList>
     </MasterLayout>
   ));
