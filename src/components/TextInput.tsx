@@ -61,6 +61,7 @@ const Input = styled(ValidInput) `
 
   &::placeholder {
     color: ${atoms.colors.purple1};
+    opacity: 1; /* fix firefox default placeholder opacity */
   }
 
   &:focus {
